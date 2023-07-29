@@ -1,8 +1,11 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useContext } from "react"
+import { TimerContext } from "../context/TimerContext"
 
 export default function MainHook() {
+   const { stopTimer } = useContext(TimerContext)
    const quantity = 4
    const [cards, setCards] = useState([])
+   const [uncoveredCards, setUncoveredCards] = useState([])
    const cardsSelected = useRef([])
 
    const createCards = (quantity) => {
@@ -43,5 +46,11 @@ export default function MainHook() {
       setCards(final.sort((a, b) => a.id - b.id))
    }, [])
 
-   return { cards, cardsSelected }
+   useEffect(() => {
+      if (uncoveredCards.length === quantity ** 2) {
+         stopTimer()
+      }
+   }, [uncoveredCards])
+
+   return { cards, cardsSelected, setUncoveredCards, uncoveredCards }
 }

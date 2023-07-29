@@ -1,10 +1,13 @@
 import "./App.css"
 import Main from "./components/Main"
+import { TimerProvider } from "./context/TimerContext"
 
 function App() {
    return (
       <>
-         <Main />
+         <TimerProvider>
+            <Main />
+         </TimerProvider>
       </>
    )
 }
